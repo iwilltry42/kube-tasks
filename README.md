@@ -1,8 +1,8 @@
-[![Release](https://img.shields.io/github/release/maorfr/kube-tasks.svg)](https://github.com/iwilltry42/kube-tasks/releases)
-[![Travis branch](https://img.shields.io/travis/maorfr/kube-tasks/master.svg)](https://travis-ci.org/maorfr/kube-tasks)
-[![Docker Pulls](https://img.shields.io/docker/pulls/maorfr/kube-tasks.svg)](https://hub.docker.com/r/maorfr/kube-tasks/)
+[![Release](https://img.shields.io/github/release/iwilltry42/kube-tasks.svg)](https://github.com/iwilltry42/kube-tasks/releases)
+[![Travis branch](https://img.shields.io/travis/iwilltry42/kube-tasks/master.svg)](https://travis-ci.org/iwilltry42/kube-tasks)
+[![Docker Pulls](https://img.shields.io/docker/pulls/iwilltry42/kube-tasks.svg)](https://hub.docker.com/r/iwilltry42/kube-tasks/)
 [![Go Report Card](https://goreportcard.com/badge/github.com/iwilltry42/kube-tasks)](https://goreportcard.com/report/github.com/iwilltry42/kube-tasks)
-[![license](https://img.shields.io/github/license/maorfr/kube-tasks.svg)](https://github.com/iwilltry42/kube-tasks/blob/master/LICENSE)
+[![license](https://img.shields.io/github/license/iwilltry42/kube-tasks.svg)](https://github.com/iwilltry42/kube-tasks/blob/master/LICENSE)
 
 # Kube tasks
 
@@ -32,7 +32,7 @@ Flags:
 
 Example: Backup Jenkins
 ```
-kube-tasks simple-backup -n default -l release=jenkins -c jenkins --path /var/jenkins_home --dst s3://maorfr-jenkins-data
+kube-tasks simple-backup -n default -l release=jenkins -c jenkins --path /var/jenkins_home --dst s3://iwilltry42-jenkins-data
 ```
 
 ### Wait for Pods
