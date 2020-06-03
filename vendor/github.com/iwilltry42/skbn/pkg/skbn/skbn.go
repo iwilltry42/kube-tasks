@@ -4,9 +4,10 @@ import (
 	"context"
 	"fmt"
 	"io"
-	"log"
 	"math"
 	"path/filepath"
+
+	log "github.com/sirupsen/logrus"
 
 	"github.com/iwilltry42/skbn/pkg/utils"
 
@@ -115,8 +116,8 @@ func PerformCopy(srcClient, dstClient interface{}, srcPrefix, dstPrefix string, 
 	currentLine := 0
 	for _, ftp := range fromToPaths {
 
-		log.Printf("@@@ FTP: %s -> %s", ftp.FromPath, ftp.ToPath)
-		log.Printf(">>> errc %+v (len: %d)", errc, len(errc))
+		log.Infof("@@@ FTP: %s -> %s", ftp.FromPath, ftp.ToPath)
+		log.Infof(">>> errc %+v (len: %d)", errc, len(errc))
 		if len(errc) != 0 {
 			break
 		}
@@ -135,7 +136,7 @@ func PerformCopy(srcClient, dstClient interface{}, srcPrefix, dstPrefix string, 
 
 			newBufferSize := (int64)(bufferSize * 1024 * 1024) // may not be super accurate
 			buf := buffer.New(newBufferSize)
-			pr, pw := nio.Pipe(buf)
+			pr, pw := nio.Pipe(buf) // pipe: writer (download) -> buffer -> reader (upload)
 
 			log.Printf("[%s/%d] copy: %s://%s -> %s://%s", currentLinePadded, totalFiles, srcPrefix, fromPath, dstPrefix, toPath)
 
@@ -146,8 +147,9 @@ func PerformCopy(srcClient, dstClient interface{}, srcPrefix, dstPrefix string, 
 				}
 				err := Download(srcClient, srcPrefix, fromPath, pw)
 				if err != nil {
-					log.Println(err, fmt.Sprintf(" src: file: %s", fromPath))
+					log.Errorln(err, fmt.Sprintf(" src: file: %s", fromPath))
 					errc <- err
+					log.Errorln("FAILED downloading, error sent to channel")
 				}
 			}()
 
@@ -160,8 +162,9 @@ func PerformCopy(srcClient, dstClient interface{}, srcPrefix, dstPrefix string, 
 				defer log.Printf("[%s/%d] done: %s://%s -> %s://%s", currentLinePadded, totalFiles, srcPrefix, fromPath, dstPrefix, toPath)
 				err := Upload(dstClient, dstPrefix, toPath, fromPath, pr)
 				if err != nil {
-					log.Println(err, fmt.Sprintf(" dst: file: %s", toPath))
+					log.Errorln(err, fmt.Sprintf(" dst: file: %s", toPath))
 					errc <- err
+					log.Errorln("FAILED uploading, error sent to channel")
 				}
 			}()
 		}(srcClient, dstClient, srcPrefix, ftp.FromPath, dstPrefix, ftp.ToPath, currentLinePadded, totalFiles)
