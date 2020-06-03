@@ -80,8 +80,8 @@ func NewSimpleBackupCmd(out io.Writer) *cobra.Command {
 type waitForPods struct {
 	namespace string
 	selector  string
-	container string
-	replicas  int
+	//container string
+	replicas int
 
 	out io.Writer
 }

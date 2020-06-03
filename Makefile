@@ -1,5 +1,3 @@
-HAS_DEP := $(shell command -v dep;)
-DEP_VERSION := v0.5.0
 GIT_TAG := $(shell git describe --tags --always)
 GIT_COMMIT := $(shell git rev-parse --short HEAD)
 LDFLAGS := "-X main.GitTag=${GIT_TAG} -X main.GitCommit=${GIT_COMMIT}"
@@ -8,7 +6,12 @@ DOCKER_USER := $(shell printenv DOCKER_USER)
 DOCKER_PASSWORD := $(shell printenv DOCKER_PASSWORD)
 TRAVIS := $(shell printenv TRAVIS)
 
-all: bootstrap build docker push
+# configuration adjustments for golangci-lint
+GOLANGCI_LINT_DISABLED_LINTERS := "" # disabling typecheck, because it currently (06.09.2019) fails with Go 1.13
+# Rules for directory list as input for the golangci-lint program
+LINT_DIRS := $(DIRS) $(foreach dir,$(REC_DIRS),$(dir)/...)
+
+all: build docker push
 
 fmt:
 	go fmt ./pkg/... ./cmd/...
@@ -16,14 +19,17 @@ fmt:
 vet:
 	go vet ./pkg/... ./cmd/...
 
+lint:
+	@golangci-lint run -D $(GOLANGCI_LINT_DISABLED_LINTERS) $(LINT_DIRS)
+
 # Build kube-tasks binary
-build: fmt vet
+build: fmt vet lint
 	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags $(LDFLAGS) -o bin/kube-tasks cmd/kube-tasks.go
 
 # Build kube-tasks docker image
 docker: fmt vet
 	cp bin/kube-tasks kube-tasks
-	docker build -t maorfr/kube-tasks:latest .
+	docker build -t iwilltry42/kube-tasks:latest .
 	rm kube-tasks
 
 
@@ -33,17 +39,10 @@ ifdef TRAVIS
 ifdef DOCKER_USER
 ifdef DOCKER_PASSWORD
 	docker login -u $(DOCKER_USER) -p $(DOCKER_PASSWORD)
-	docker push maorfr/kube-tasks:latest
+	docker push iwilltry42/kube-tasks:latest
 endif
 endif
 endif
-
-bootstrap:
-ifndef HAS_DEP
-	wget -q -O $(GOPATH)/bin/dep https://github.com/golang/dep/releases/download/$(DEP_VERSION)/dep-linux-amd64
-	chmod +x $(GOPATH)/bin/dep
-endif
-	dep ensure
 
 dist:
 	mkdir -p $(DIST)
