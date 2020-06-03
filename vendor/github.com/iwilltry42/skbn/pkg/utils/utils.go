@@ -8,13 +8,6 @@ import (
 	"time"
 )
 
-// toggleAWSVars handles the use of heptio-authenticator-aws alongside kubectl
-func toggleAWSVars(awsProfile, awsSdkLoadConfig string) string {
-	oldAWSProfile := ToggleEnvVar("AWS_PROFILE", awsProfile)
-
-	return oldAWSProfile
-}
-
 // ToggleEnvVar sets key to a new value and returns its old value
 func ToggleEnvVar(key, value string) string {
 	oldValue := os.Getenv(key)

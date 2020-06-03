@@ -8,7 +8,7 @@ import (
 	"math"
 	"path/filepath"
 
-	"github.com/maorfr/skbn/pkg/utils"
+	"github.com/iwilltry42/skbn/pkg/utils"
 
 	"github.com/djherbis/buffer"
 	"gopkg.in/djherbis/nio.v2"
@@ -115,6 +115,8 @@ func PerformCopy(srcClient, dstClient interface{}, srcPrefix, dstPrefix string, 
 	currentLine := 0
 	for _, ftp := range fromToPaths {
 
+		log.Printf("@@@ FTP: %s -> %s", ftp.FromPath, ftp.ToPath)
+		log.Printf(">>> errc %+v (len: %d)", errc, len(errc))
 		if len(errc) != 0 {
 			break
 		}
