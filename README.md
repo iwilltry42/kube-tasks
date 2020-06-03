@@ -6,6 +6,8 @@
 
 # Kube tasks
 
+Original project: [maorfr/kube-tasks](https://github.com/maorfr/kube-tasks)
+
 A tool to perform simple Kubernetes related actions
 
 ## Commands
