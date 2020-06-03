@@ -10,7 +10,6 @@ cloud.google.com/go/storage
 ## explicit
 github.com/Azure/azure-pipeline-go/pipeline
 # github.com/Azure/azure-storage-blob-go v0.0.0-20181022225951-5152f14ace1c
-## explicit
 github.com/Azure/azure-storage-blob-go/azblob
 # github.com/aws/aws-sdk-go v1.23.13
 ## explicit
@@ -54,7 +53,6 @@ github.com/aws/aws-sdk-go/service/s3/s3manager
 github.com/aws/aws-sdk-go/service/sts
 github.com/aws/aws-sdk-go/service/sts/stsiface
 # github.com/djherbis/buffer v0.0.0-20150721040419-4972e2bf4a27
-## explicit
 github.com/djherbis/buffer
 github.com/djherbis/buffer/limio
 github.com/djherbis/buffer/wrapio
@@ -62,8 +60,6 @@ github.com/djherbis/buffer/wrapio
 ## explicit
 github.com/docker/spdystream
 github.com/docker/spdystream/spdy
-# github.com/elazarl/goproxy v0.0.0-20200426045556-49ad98f6dac1
-## explicit
 # github.com/gogo/protobuf v1.2.1
 ## explicit
 github.com/gogo/protobuf/proto
@@ -76,7 +72,6 @@ github.com/golang/protobuf/ptypes/any
 github.com/golang/protobuf/ptypes/duration
 github.com/golang/protobuf/ptypes/timestamp
 # github.com/google/btree v1.0.0
-## explicit
 github.com/google/btree
 # github.com/google/gofuzz v1.0.0
 github.com/google/gofuzz
@@ -108,18 +103,12 @@ github.com/jmespath/go-jmespath
 # github.com/json-iterator/go v1.1.7
 ## explicit
 github.com/json-iterator/go
-# github.com/maorfr/skbn v0.0.0-20190316071936-3d8a7af7e620
-## explicit
 # github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd
-## explicit
 github.com/modern-go/concurrent
 # github.com/modern-go/reflect2 v1.0.1
 github.com/modern-go/reflect2
 # github.com/peterbourgon/diskv v2.0.1+incompatible
-## explicit
 github.com/peterbourgon/diskv
-# github.com/pkg/errors v0.8.0
-## explicit
 # github.com/spf13/cobra v0.0.5
 ## explicit
 github.com/spf13/cobra
@@ -241,15 +230,12 @@ google.golang.org/grpc/stats
 google.golang.org/grpc/status
 google.golang.org/grpc/tap
 # gopkg.in/djherbis/nio.v2 v2.0.3
-## explicit
 gopkg.in/djherbis/nio.v2
 # gopkg.in/inf.v0 v0.9.1
-## explicit
 gopkg.in/inf.v0
 # gopkg.in/yaml.v2 v2.2.2
 gopkg.in/yaml.v2
 # k8s.io/api v0.0.0-20181204000039-89a74a8d264d
-## explicit
 k8s.io/api/admissionregistration/v1alpha1
 k8s.io/api/admissionregistration/v1beta1
 k8s.io/api/apps/v1
@@ -324,7 +310,6 @@ k8s.io/apimachinery/pkg/watch
 k8s.io/apimachinery/third_party/forked/golang/netutil
 k8s.io/apimachinery/third_party/forked/golang/reflect
 # k8s.io/client-go v10.0.0+incompatible
-## explicit
 k8s.io/client-go/discovery
 k8s.io/client-go/kubernetes
 k8s.io/client-go/kubernetes/scheme
@@ -390,5 +375,4 @@ k8s.io/client-go/util/jsonpath
 ## explicit
 k8s.io/klog
 # sigs.k8s.io/yaml v1.1.0
-## explicit
 sigs.k8s.io/yaml
