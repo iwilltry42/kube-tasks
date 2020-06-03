@@ -67,6 +67,8 @@ github.com/imdario/mergo v0.3.7 h1:Y+UAYTZ7gDEuOfhxKWy+dvb5dRQ6rJjFSdX2HZY1/gI=
 github.com/imdario/mergo v0.3.7/go.mod h1:2EnlNZ0deacrJVfApfmtdGgDfMuh/nq6Ok1EcJh5FfA=
 github.com/inconshreveable/mousetrap v1.0.0 h1:Z8tu5sraLXCXIcARxBp/8cbvlwVa7Z1NHg9XEKhtSvM=
 github.com/inconshreveable/mousetrap v1.0.0/go.mod h1:PxqpIevigyE2G7u3NXJIT2ANytuPF1OarO4DADm73n8=
+github.com/iwilltry42/skbn v0.0.0-20190316071936-3d8a7af7e620 h1:tGGuQJOBMEjFpa+akBasArDNn6KOmAG0VvbM6h59fnU=
+github.com/iwilltry42/skbn v0.0.0-20190316071936-3d8a7af7e620/go.mod h1:lewL2T7BcMikpAcuW5WaEStYDOR92w69iY6OkCBosGo=
 github.com/jmespath/go-jmespath v0.0.0-20180206201540-c2b33e8439af h1:pmfjZENx5imkbgOkpRUYLnmbU7UEFbjtDA2hxJ1ichM=
 github.com/jmespath/go-jmespath v0.0.0-20180206201540-c2b33e8439af/go.mod h1:Nht3zPeWKUH0NzdCt2Blrr5ys8VGpn0CEB0cQHVjt7k=
 github.com/json-iterator/go v1.1.7 h1:KfgG9LzI+pYjr4xvmz/5H4FXjokeP+rlHLhv3iH62Fo=
@@ -75,8 +77,6 @@ github.com/jstemmer/go-junit-report v0.0.0-20190106144839-af01ea7f8024/go.mod h1
 github.com/kisielk/errcheck v1.1.0/go.mod h1:EZBBE59ingxPouuu3KfxchcWSUPOHkagtvWXihfKN4Q=
 github.com/kisielk/gotool v1.0.0/go.mod h1:XhKaO+MFFWcvkIS/tQcRk01m1F5IRFswLeQ+oQHNcck=
 github.com/magiconair/properties v1.8.0/go.mod h1:PppfXfuXeibc/6YijjN8zIbojt8czPbwD3XqdrwzmxQ=
-github.com/maorfr/kube-tasks v0.0.0-20190901091308-2824b458ecff h1:kqkwP9ctijFz8ZVXERuy2M/8RuJkiXt+sI66ArTcxzU=
-github.com/maorfr/kube-tasks v0.0.0-20190901091308-2824b458ecff/go.mod h1:dYx1dX5NptcEY/+hdDuja6nUWwNKNnFooPoeMlN0BJw=
 github.com/maorfr/skbn v0.0.0-20190316071936-3d8a7af7e620 h1:W2xiKYvsGWamYblO5WXxWIJRBzO3Qbtsf6pSVjtgjU0=
 github.com/maorfr/skbn v0.0.0-20190316071936-3d8a7af7e620/go.mod h1:ziLHuToZWV2oRs3nfJyrH5Cf/wb2TEZ1jNC5HLC6cww=
 github.com/mitchellh/go-homedir v1.1.0/go.mod h1:SfyaCUpYCn1Vlf4IUYiD9fPX4A5wJrkLzIz1N1q0pr0=

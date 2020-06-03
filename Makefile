@@ -27,7 +27,7 @@ build: fmt vet lint
 	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags $(LDFLAGS) -o bin/kube-tasks cmd/kube-tasks.go
 
 # Build kube-tasks docker image
-docker: fmt vet
+docker: lint fmt vet
 	cp bin/kube-tasks kube-tasks
 	docker build -t iwilltry42/kube-tasks:latest .
 	rm kube-tasks

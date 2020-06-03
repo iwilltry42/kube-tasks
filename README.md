@@ -1,8 +1,8 @@
-[![Release](https://img.shields.io/github/release/maorfr/kube-tasks.svg)](https://github.com/maorfr/kube-tasks/releases)
+[![Release](https://img.shields.io/github/release/maorfr/kube-tasks.svg)](https://github.com/iwilltry42/kube-tasks/releases)
 [![Travis branch](https://img.shields.io/travis/maorfr/kube-tasks/master.svg)](https://travis-ci.org/maorfr/kube-tasks)
 [![Docker Pulls](https://img.shields.io/docker/pulls/maorfr/kube-tasks.svg)](https://hub.docker.com/r/maorfr/kube-tasks/)
-[![Go Report Card](https://goreportcard.com/badge/github.com/maorfr/kube-tasks)](https://goreportcard.com/report/github.com/maorfr/kube-tasks)
-[![license](https://img.shields.io/github/license/maorfr/kube-tasks.svg)](https://github.com/maorfr/kube-tasks/blob/master/LICENSE)
+[![Go Report Card](https://goreportcard.com/badge/github.com/iwilltry42/kube-tasks)](https://goreportcard.com/report/github.com/iwilltry42/kube-tasks)
+[![license](https://img.shields.io/github/license/maorfr/kube-tasks.svg)](https://github.com/iwilltry42/kube-tasks/blob/master/LICENSE)
 
 # Kube tasks
 

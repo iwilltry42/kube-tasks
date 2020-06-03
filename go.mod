@@ -15,9 +15,9 @@ require (
 	github.com/gregjones/httpcache v0.0.0-20190611155906-901d90724c79 // indirect
 	github.com/hashicorp/golang-lru v0.5.3 // indirect
 	github.com/imdario/mergo v0.3.7 // indirect
+	github.com/iwilltry42/skbn v0.0.0-20190316071936-3d8a7af7e620
 	github.com/json-iterator/go v1.1.7 // indirect
-	github.com/maorfr/kube-tasks v0.0.0-20190901091308-2824b458ecff
-	github.com/maorfr/skbn v0.0.0-20190316071936-3d8a7af7e620
+	github.com/maorfr/skbn v0.0.0-20190316071936-3d8a7af7e620 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/peterbourgon/diskv v2.0.1+incompatible // indirect
 	github.com/pkg/errors v0.8.0 // indirect
