@@ -11,7 +11,7 @@ require (
 	github.com/gregjones/httpcache v0.0.0-20190611155906-901d90724c79 // indirect
 	github.com/hashicorp/golang-lru v0.5.3 // indirect
 	github.com/imdario/mergo v0.3.7 // indirect
-	github.com/iwilltry42/skbn v0.0.0-20200603100508-7d6dcba3f06a
+	github.com/iwilltry42/skbn v0.0.0-20200610075017-e9c77ffaf1e7
 	github.com/json-iterator/go v1.1.7 // indirect
 	github.com/spf13/cobra v0.0.5
 	go.opencensus.io v0.22.0 // indirect
@@ -26,3 +26,5 @@ require (
 	k8s.io/apimachinery v0.0.0-20190817221809-bf4de9df677c
 	k8s.io/klog v0.4.0 // indirect
 )
+
+// replace github.com/iwilltry42/skbn => /home/thklein/git/github.com/iwilltry42/skbn
