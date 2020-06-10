@@ -94,7 +94,7 @@ github.com/hashicorp/golang-lru/simplelru
 github.com/imdario/mergo
 # github.com/inconshreveable/mousetrap v1.0.0
 github.com/inconshreveable/mousetrap
-# github.com/iwilltry42/skbn v0.0.0-20200610075017-e9c77ffaf1e7
+# github.com/iwilltry42/skbn v0.0.0-20200610161714-467ff8af3dec
 ## explicit
 github.com/iwilltry42/skbn/pkg/skbn
 github.com/iwilltry42/skbn/pkg/utils

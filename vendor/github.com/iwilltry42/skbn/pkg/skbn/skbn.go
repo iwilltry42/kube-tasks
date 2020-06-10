@@ -113,16 +113,9 @@ func PerformCopy(srcClient, dstClient interface{}, srcPrefix, dstPrefix string, 
 	}
 	bwgSize := int(math.Min(float64(parallel), float64(totalFiles))) // Very stingy :)
 	bwg := utils.NewBoundedWaitGroup(bwgSize)
-	errc := make(chan error, 1)
 	currentLine := 0
 	failureCount := 0
 	for _, ftp := range fromToPaths {
-
-		log.Infof("@@@ FTP: %s -> %s", ftp.FromPath, ftp.ToPath)
-		log.Infof(">>> errc %+v (len: %d)", errc, len(errc))
-		if len(errc) != 0 {
-			break
-		}
 
 		bwg.Add(1)
 		currentLine++
@@ -132,18 +125,9 @@ func PerformCopy(srcClient, dstClient interface{}, srcPrefix, dstPrefix string, 
 
 		go DownloadUpload(srcClient, dstClient, srcPrefix, ftp.FromPath, dstPrefix, ftp.ToPath, currentLinePadded, totalFiles, bufferSize, &failureCount, &bwg)
 	}
-	log.Println("Waiting for group")
 	bwg.Wait()
-	if len(errc) != 0 {
-		log.Println("Waiting for err")
-		// This is not exactly the correct behavior
-		// There may be more than 1 error in the channel
-		// But first let's make it work
-		err := <-errc
-		close(errc)
-		if err != nil {
-			return err
-		}
+	if failureCount > 0 {
+		return fmt.Errorf("Copying failed for %d files: Check the logs for more information", failureCount)
 	}
 	return nil
 }
@@ -161,7 +145,6 @@ func DownloadUpload(srcClient, dstClient interface{}, srcPrefix, fromPath, dstPr
 
 	downUpGroup.Go(func() error {
 		defer pipeWriter.Close()
-		log.Printf("Downloading %s", fromPath)
 
 		err := Download(ctx, srcClient, srcPrefix, fromPath, pipeWriter)
 		if err != nil {
@@ -173,7 +156,6 @@ func DownloadUpload(srcClient, dstClient interface{}, srcPrefix, fromPath, dstPr
 
 	downUpGroup.Go(func() error {
 		defer pipeReader.Close()
-		log.Printf("UPLOADING %s -> %s", fromPath, toPath)
 
 		err := Upload(ctx, dstClient, dstPrefix, toPath, fromPath, pipeReader)
 		if err != nil {

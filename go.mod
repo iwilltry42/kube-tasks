@@ -11,7 +11,7 @@ require (
 	github.com/gregjones/httpcache v0.0.0-20190611155906-901d90724c79 // indirect
 	github.com/hashicorp/golang-lru v0.5.3 // indirect
 	github.com/imdario/mergo v0.3.7 // indirect
-	github.com/iwilltry42/skbn v0.0.0-20200610075017-e9c77ffaf1e7
+	github.com/iwilltry42/skbn v0.0.0-20200610161714-467ff8af3dec
 	github.com/json-iterator/go v1.1.7 // indirect
 	github.com/spf13/cobra v0.0.5
 	go.opencensus.io v0.22.0 // indirect
