@@ -4,9 +4,10 @@ import (
 	"context"
 	"fmt"
 	"io"
-	"log"
 	"path/filepath"
 	"strings"
+
+	log "github.com/sirupsen/logrus"
 
 	"github.com/iwilltry42/skbn/pkg/utils"
 
@@ -46,7 +47,7 @@ func GetClientToGcs(ctx context.Context, path string) (*storage.Client, error) {
 		utils.Sleep(attempt)
 	}
 
-	log.Println("Could not get client to GCS")
+	log.Infoln("Could not get client to GCS")
 	return nil, nil
 }
 
@@ -93,7 +94,7 @@ func DownloadFromGcs(ctx context.Context, iClient interface{}, path string, writ
 			reader, err := client.Bucket(bucketName).Object(gcsPath).NewReader(ctx)
 			defer func() {
 				if err := reader.Close(); err != nil {
-					log.Println("Error in reader.Close()", err)
+					log.Infoln("Error in reader.Close()", err)
 				}
 			}()
 			if err != nil { // no object found at [path]
@@ -115,7 +116,7 @@ func DownloadFromGcs(ctx context.Context, iClient interface{}, path string, writ
 		return nil
 	}
 
-	log.Println("Could not download file from GCS at", path)
+	log.Infoln("Could not download file from GCS at", path)
 	return nil
 }
 
@@ -141,7 +142,7 @@ func UploadToGcs(ctx context.Context, iClient interface{}, toPath, fromPath stri
 			writer := client.Bucket(bucketName).Object(gcsPath).NewWriter(ctx)
 			defer func() {
 				if err := writer.Close(); err != nil {
-					log.Println("Error in writer.Close()", err)
+					log.Infoln("Error in writer.Close()", err)
 				}
 			}()
 			_, err := io.Copy(writer, reader)
@@ -161,7 +162,7 @@ func UploadToGcs(ctx context.Context, iClient interface{}, toPath, fromPath stri
 		return nil
 	}
 
-	log.Println("Could not upload file to GCS at", toPath)
+	log.Infoln("Could not upload file to GCS at", toPath)
 	return nil
 }
 

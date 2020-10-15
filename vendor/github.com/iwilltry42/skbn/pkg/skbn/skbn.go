@@ -141,7 +141,7 @@ func DownloadUpload(srcClient, dstClient interface{}, srcPrefix, fromPath, dstPr
 	buf := buffer.New(newBufferSize)
 	pipeReader, pipeWriter := nio.Pipe(buf) // pipe: writer (download) -> buffer -> reader (upload)
 
-	log.Printf("[%s/%d] copy: %s://%s -> %s://%s", currentLinePadded, totalFiles, srcPrefix, fromPath, dstPrefix, toPath)
+	log.Infof("[%s/%d] copy: %s://%s -> %s://%s", currentLinePadded, totalFiles, srcPrefix, fromPath, dstPrefix, toPath)
 
 	downUpGroup.Go(func() error {
 		defer pipeWriter.Close()
@@ -162,7 +162,7 @@ func DownloadUpload(srcClient, dstClient interface{}, srcPrefix, fromPath, dstPr
 			log.Errorln(err, fmt.Sprintf(" failed upload to dst: file: %s", toPath))
 			return err
 		}
-		log.Printf("[%s/%d] done: %s://%s -> %s://%s", currentLinePadded, totalFiles, srcPrefix, fromPath, dstPrefix, toPath)
+		log.Infof("[%s/%d] done: %s://%s -> %s://%s", currentLinePadded, totalFiles, srcPrefix, fromPath, dstPrefix, toPath)
 		return nil
 	})
 

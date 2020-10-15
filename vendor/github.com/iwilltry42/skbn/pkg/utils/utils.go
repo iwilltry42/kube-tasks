@@ -1,11 +1,12 @@
 package utils
 
 import (
-	"log"
 	"os"
 	"strconv"
 	"strings"
 	"time"
+
+	log "github.com/sirupsen/logrus"
 )
 
 // ToggleEnvVar sets key to a new value and returns its old value
