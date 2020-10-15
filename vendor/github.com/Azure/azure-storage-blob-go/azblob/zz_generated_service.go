@@ -203,6 +203,85 @@ func (client serviceClient) getStatisticsResponder(resp pipeline.Response) (pipe
 	return result, nil
 }
 
+// GetUserDelegationKey retrieves a user delegation key for the Blob service. This is only a valid operation when using
+// bearer token authentication.
+//
+// timeout is the timeout parameter is expressed in seconds. For more information, see <a
+// href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
+// Timeouts for Blob Service Operations.</a> requestID is provides a client-generated, opaque value with a 1 KB
+// character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+func (client serviceClient) GetUserDelegationKey(ctx context.Context, keyInfo KeyInfo, timeout *int32, requestID *string) (*UserDelegationKey, error) {
+	if err := validate([]validation{
+		{targetValue: timeout,
+			constraints: []constraint{{target: "timeout", name: null, rule: false,
+				chain: []constraint{{target: "timeout", name: inclusiveMinimum, rule: 0, chain: nil}}}}}}); err != nil {
+		return nil, err
+	}
+	req, err := client.getUserDelegationKeyPreparer(keyInfo, timeout, requestID)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Pipeline().Do(ctx, responderPolicyFactory{responder: client.getUserDelegationKeyResponder}, req)
+	if err != nil {
+		return nil, err
+	}
+	return resp.(*UserDelegationKey), err
+}
+
+// getUserDelegationKeyPreparer prepares the GetUserDelegationKey request.
+func (client serviceClient) getUserDelegationKeyPreparer(keyInfo KeyInfo, timeout *int32, requestID *string) (pipeline.Request, error) {
+	req, err := pipeline.NewRequest("POST", client.url, nil)
+	if err != nil {
+		return req, pipeline.NewError(err, "failed to create request")
+	}
+	params := req.URL.Query()
+	if timeout != nil {
+		params.Set("timeout", strconv.FormatInt(int64(*timeout), 10))
+	}
+	params.Set("restype", "service")
+	params.Set("comp", "userdelegationkey")
+	req.URL.RawQuery = params.Encode()
+	req.Header.Set("x-ms-version", ServiceVersion)
+	if requestID != nil {
+		req.Header.Set("x-ms-client-request-id", *requestID)
+	}
+	b, err := xml.Marshal(keyInfo)
+	if err != nil {
+		return req, pipeline.NewError(err, "failed to marshal request body")
+	}
+	req.Header.Set("Content-Type", "application/xml")
+	err = req.SetBody(bytes.NewReader(b))
+	if err != nil {
+		return req, pipeline.NewError(err, "failed to set request body")
+	}
+	return req, nil
+}
+
+// getUserDelegationKeyResponder handles the response to the GetUserDelegationKey request.
+func (client serviceClient) getUserDelegationKeyResponder(resp pipeline.Response) (pipeline.Response, error) {
+	err := validateResponse(resp, http.StatusOK)
+	if resp == nil {
+		return nil, err
+	}
+	result := &UserDelegationKey{rawResponse: resp.Response()}
+	if err != nil {
+		return result, err
+	}
+	defer resp.Response().Body.Close()
+	b, err := ioutil.ReadAll(resp.Response().Body)
+	if err != nil {
+		return result, err
+	}
+	if len(b) > 0 {
+		b = removeBOM(b)
+		err = xml.Unmarshal(b, result)
+		if err != nil {
+			return result, NewResponseError(err, resp.Response(), "failed to unmarshal response body")
+		}
+	}
+	return result, nil
+}
+
 // ListContainersSegment the List Containers Segment operation returns a list of the containers under the specified
 // account
 //
@@ -385,4 +464,63 @@ func (client serviceClient) setPropertiesResponder(resp pipeline.Response) (pipe
 	io.Copy(ioutil.Discard, resp.Response().Body)
 	resp.Response().Body.Close()
 	return &ServiceSetPropertiesResponse{rawResponse: resp.Response()}, err
+}
+
+// SubmitBatch the Batch operation allows multiple API calls to be embedded into a single HTTP request.
+//
+// body is initial data body will be closed upon successful return. Callers should ensure closure when receiving an
+// error.contentLength is the length of the request. multipartContentType is required. The value of this header must be
+// multipart/mixed with a batch boundary. Example header value: multipart/mixed; boundary=batch_<GUID> timeout is the
+// timeout parameter is expressed in seconds. For more information, see <a
+// href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
+// Timeouts for Blob Service Operations.</a> requestID is provides a client-generated, opaque value with a 1 KB
+// character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+func (client serviceClient) SubmitBatch(ctx context.Context, body io.ReadSeeker, contentLength int64, multipartContentType string, timeout *int32, requestID *string) (*SubmitBatchResponse, error) {
+	if err := validate([]validation{
+		{targetValue: body,
+			constraints: []constraint{{target: "body", name: null, rule: true, chain: nil}}},
+		{targetValue: timeout,
+			constraints: []constraint{{target: "timeout", name: null, rule: false,
+				chain: []constraint{{target: "timeout", name: inclusiveMinimum, rule: 0, chain: nil}}}}}}); err != nil {
+		return nil, err
+	}
+	req, err := client.submitBatchPreparer(body, contentLength, multipartContentType, timeout, requestID)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Pipeline().Do(ctx, responderPolicyFactory{responder: client.submitBatchResponder}, req)
+	if err != nil {
+		return nil, err
+	}
+	return resp.(*SubmitBatchResponse), err
+}
+
+// submitBatchPreparer prepares the SubmitBatch request.
+func (client serviceClient) submitBatchPreparer(body io.ReadSeeker, contentLength int64, multipartContentType string, timeout *int32, requestID *string) (pipeline.Request, error) {
+	req, err := pipeline.NewRequest("POST", client.url, body)
+	if err != nil {
+		return req, pipeline.NewError(err, "failed to create request")
+	}
+	params := req.URL.Query()
+	if timeout != nil {
+		params.Set("timeout", strconv.FormatInt(int64(*timeout), 10))
+	}
+	params.Set("comp", "batch")
+	req.URL.RawQuery = params.Encode()
+	req.Header.Set("Content-Length", strconv.FormatInt(contentLength, 10))
+	req.Header.Set("Content-Type", multipartContentType)
+	req.Header.Set("x-ms-version", ServiceVersion)
+	if requestID != nil {
+		req.Header.Set("x-ms-client-request-id", *requestID)
+	}
+	return req, nil
+}
+
+// submitBatchResponder handles the response to the SubmitBatch request.
+func (client serviceClient) submitBatchResponder(resp pipeline.Response) (pipeline.Response, error) {
+	err := validateResponse(resp, http.StatusOK)
+	if resp == nil {
+		return nil, err
+	}
+	return &SubmitBatchResponse{rawResponse: resp.Response()}, err
 }
