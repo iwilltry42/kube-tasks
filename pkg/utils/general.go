@@ -2,11 +2,12 @@ package utils
 
 import (
 	"fmt"
-	"log"
 	"math/rand"
 	"strconv"
 	"strings"
 	"time"
+
+	log "github.com/sirupsen/logrus"
 )
 
 // SplitInTwo splits a string to two parts by a delimeter
