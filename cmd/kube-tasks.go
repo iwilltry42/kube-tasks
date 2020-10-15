@@ -58,7 +58,7 @@ func NewSimpleBackupCmd(out io.Writer) *cobra.Command {
 		Short: "Backup files to cloud storage",
 		Long:  ``,
 		Run: func(cmd *cobra.Command, args []string) {
-			if _, err := kubetasks.SimpleBackup(b.namespace, b.selector, b.container, b.path, b.dst, b.parallel, b.tag, b.bufferSize); err != nil {
+			if _, err := kubetasks.SimpleBackup(cmd.Context(), b.namespace, b.selector, b.container, b.path, b.dst, b.parallel, b.tag, b.bufferSize); err != nil {
 				log.Fatal(err)
 			}
 		},
@@ -95,7 +95,7 @@ func NewWaitForPodsCmd(out io.Writer) *cobra.Command {
 		Short: "Wait for a given number of ready pods",
 		Long:  ``,
 		Run: func(cmd *cobra.Command, args []string) {
-			if err := kubetasks.WaitForPods(w.namespace, w.selector, w.replicas); err != nil {
+			if err := kubetasks.WaitForPods(cmd.Context(), w.namespace, w.selector, w.replicas); err != nil {
 				log.Fatal(err)
 			}
 		},
@@ -127,7 +127,7 @@ func NewExecuteCmd(out io.Writer) *cobra.Command {
 		Short: "Execute a command in a container. Only executes the command in the first pod",
 		Long:  ``,
 		Run: func(cmd *cobra.Command, args []string) {
-			if err := kubetasks.Execute(e.namespace, e.selector, e.container, e.command); err != nil {
+			if err := kubetasks.Execute(cmd.Context(), e.namespace, e.selector, e.container, e.command); err != nil {
 				log.Fatal(err)
 			}
 		},

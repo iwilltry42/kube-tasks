@@ -2,6 +2,7 @@ package kubetasks
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"log"
 	"path/filepath"
@@ -13,7 +14,8 @@ import (
 )
 
 // SimpleBackup performs backup
-func SimpleBackup(namespace, selector, container, path, dst string, parallel int, tag string, bufferSize float64) (string, error) {
+func SimpleBackup(ctx context.Context, namespace, selector, container, path, dst string, parallel int, tag string, bufferSize float64) (string, error) {
+
 	log.Println("Backup started!")
 	dstPrefix, dstPath := utils.SplitInTwo(dst, "://")
 	dstPath = filepath.Join(dstPath, tag)
@@ -25,7 +27,7 @@ func SimpleBackup(namespace, selector, container, path, dst string, parallel int
 	}
 
 	log.Println("Getting pods")
-	pods, err := utils.GetReadyPods(k8sClient, namespace, selector)
+	pods, err := utils.GetReadyPods(ctx, k8sClient, namespace, selector)
 	if err != nil {
 		return "", err
 	}
@@ -50,7 +52,7 @@ func SimpleBackup(namespace, selector, container, path, dst string, parallel int
 }
 
 // WaitForPods waits for a given number of pods
-func WaitForPods(namespace, selector string, desiredReplicas int) error {
+func WaitForPods(ctx context.Context, namespace, selector string, desiredReplicas int) error {
 	log.Println("Getting clients")
 	k8sClient, err := skbn.GetClientToK8s()
 	if err != nil {
@@ -60,7 +62,7 @@ func WaitForPods(namespace, selector string, desiredReplicas int) error {
 	readyPods := -1
 	log.Printf("Waiting for %d ready pods", desiredReplicas)
 	for readyPods != desiredReplicas {
-		pods, err := utils.GetReadyPods(k8sClient, namespace, selector)
+		pods, err := utils.GetReadyPods(ctx, k8sClient, namespace, selector)
 		if err != nil {
 			return err
 		}
@@ -75,7 +77,7 @@ func WaitForPods(namespace, selector string, desiredReplicas int) error {
 }
 
 // Execute executes simple commands in a container
-func Execute(namespace, selector, container, command string) error {
+func Execute(ctx context.Context, namespace, selector, container, command string) error {
 	log.Println("Getting clients")
 	k8sClient, err := skbn.GetClientToK8s()
 	if err != nil {
@@ -83,7 +85,7 @@ func Execute(namespace, selector, container, command string) error {
 	}
 
 	log.Println("Getting pods")
-	pods, err := utils.GetReadyPods(k8sClient, namespace, selector)
+	pods, err := utils.GetReadyPods(ctx, k8sClient, namespace, selector)
 	if err != nil {
 		return err
 	}

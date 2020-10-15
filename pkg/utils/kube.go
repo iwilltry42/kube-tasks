@@ -1,15 +1,17 @@
 package utils
 
 import (
+	"context"
+
 	"github.com/iwilltry42/skbn/pkg/skbn"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 // GetReadyPods gets a list of all ready ports according to defined namespace and selector
-func GetReadyPods(iClient interface{}, namespace, selector string) ([]string, error) {
+func GetReadyPods(ctx context.Context, iClient interface{}, namespace, selector string) ([]string, error) {
 
 	k8sClient := *iClient.(*skbn.K8sClient)
-	pods, err := k8sClient.ClientSet.CoreV1().Pods(namespace).List(metav1.ListOptions{
+	pods, err := k8sClient.ClientSet.CoreV1().Pods(namespace).List(ctx, metav1.ListOptions{
 		LabelSelector: selector,
 	})
 	if err != nil {
