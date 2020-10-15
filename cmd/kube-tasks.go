@@ -12,6 +12,13 @@ import (
 	"github.com/spf13/cobra"
 )
 
+// RootFlags describes a struct that holds flags that can be set on root level of the command
+type RootFlags struct {
+	loglevel string
+}
+
+var flags = RootFlags{}
+
 func main() {
 	cmd := NewRootCmd(os.Args[1:])
 	if err := cmd.Execute(); err != nil {
@@ -64,6 +71,11 @@ func NewSimpleBackupCmd(out io.Writer) *cobra.Command {
 			}
 		},
 	}
+
+	cmd.PersistentFlags().StringVarP(&flags.loglevel, "log-level", "l", "", "Set log level [error, warn, info, debug, trace] (default: info)")
+
+	cobra.OnInitialize(initLogging)
+
 	f := cmd.Flags()
 
 	f.StringVarP(&b.namespace, "namespace", "n", "", "namespace to find pods")
@@ -76,6 +88,23 @@ func NewSimpleBackupCmd(out io.Writer) *cobra.Command {
 	f.Float64VarP(&b.bufferSize, "buffer-size", "b", 6.75, "in-memory buffer size (in MB) to use for files copy (buffer per file)")
 
 	return cmd
+}
+
+func initLogging() {
+	loglevel := log.InfoLevel
+	var err error
+
+	ll := flags.loglevel
+	if ll == "" {
+		ll = os.Getenv("LOG_LEVEL")
+	}
+	if ll != "" {
+		loglevel, err = log.ParseLevel(ll)
+		if err != nil {
+			log.Fatalf("Failed to set log level from '--log-level' flag or env var LOG_LEVEL")
+		}
+	}
+	log.SetLevel(loglevel)
 }
 
 type waitForPods struct {
