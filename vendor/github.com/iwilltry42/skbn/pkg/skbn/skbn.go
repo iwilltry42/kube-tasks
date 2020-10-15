@@ -162,7 +162,7 @@ func DownloadUpload(srcClient, dstClient interface{}, srcPrefix, fromPath, dstPr
 			log.Errorln(err, fmt.Sprintf(" failed upload to dst: file: %s", toPath))
 			return err
 		}
-		log.Infof("[%s/%d] done: %s://%s -> %s://%s", currentLinePadded, totalFiles, srcPrefix, fromPath, dstPrefix, toPath)
+		log.Debugf("[%s/%d] done: %s://%s -> %s://%s", currentLinePadded, totalFiles, srcPrefix, fromPath, dstPrefix, toPath)
 		return nil
 	})
 
