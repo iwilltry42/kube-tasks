@@ -45,7 +45,7 @@ func SimpleBackup(ctx context.Context, namespace, selector, container, path, dst
 
 	log.Infoln("Starting files copy to tag: " + tag)
 	if err := skbn.PerformCopy(k8sClient, dstClient, "k8s", dstPrefix, fromToPathsAllPods, parallel, bufferSize); err != nil {
-		return "", err
+		return "", fmt.Errorf("[SKBN] %+v", err)
 	}
 
 	log.Infoln("All done!")
