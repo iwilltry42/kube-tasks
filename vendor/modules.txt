@@ -99,7 +99,7 @@ github.com/googleapis/gnostic/openapiv2
 github.com/imdario/mergo
 # github.com/inconshreveable/mousetrap v1.0.0
 github.com/inconshreveable/mousetrap
-# github.com/iwilltry42/skbn v0.6.4
+# github.com/iwilltry42/skbn v0.6.5
 ## explicit
 github.com/iwilltry42/skbn/pkg/skbn
 github.com/iwilltry42/skbn/pkg/utils
